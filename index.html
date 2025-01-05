@@ -27,15 +27,18 @@
             width: calc(100% - 40px);
         }
         .keyboard {
-            display: grid;
-            grid-template-columns: repeat(14, 1fr);
-            gap: 5px;
             padding: 20px;
             background-color: #e5e5e5;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
+        .row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
         .key {
-            aspect-ratio: 1 / 1;
+            width: 40px;
+            height: 40px;
             background-color: #000;
             color: #fff;
             border-radius: 50%;
@@ -46,14 +49,11 @@
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
             user-select: none;
+            margin: 2px;
         }
         .key:active {
             transform: translateY(2px);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        .row {
-            display: contents;
-            align-items: center;
         }
     </style>
 </head>
@@ -75,7 +75,6 @@
             <div class="key">-</div>
             <div class="key">=</div>
         </div>
-        <br>
         <div class="row">
             <div class="key">Q</div>
             <div class="key">W</div>
@@ -90,7 +89,6 @@
             <div class="key">[</div>
             <div class="key">]</div>
         </div>
-        <br>
         <div class="row">
             <div class="key">A</div>
             <div class="key">S</div>
@@ -104,7 +102,6 @@
             <div class="key">;</div>
             <div class="key">'</div>
         </div>
-        <br>
         <div class="row">
             <div class="key">Z</div>
             <div class="key">X</div>

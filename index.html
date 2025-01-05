@@ -127,36 +127,52 @@
     </div>
 
     <script>
-        const output = document.getElementById('output');
-        const keys = document.querySelectorAll('.key');
+const output = document.getElementById('output');
+const keys = document.querySelectorAll('.key');
 
-        // Simulate typing "Hello, world" on page load
-        const text = "Hello, world";
-        let index = 0;
+// Load keypress sounds
+const keySounds = [
+    'sounds/key1.mp3',
+    'sounds/key2.mp3',
+];
 
-        function typeCharacter() {
-            if (index < text.length) {
-                const char = text[index].toUpperCase();
-                const key = Array.from(keys).find(k => k.dataset.char === char);
-                if (key) {
-                    key.classList.add('pressed');
-                    output.textContent += key.textContent;
-                    setTimeout(() => key.classList.remove('pressed'), 200);
-                } else if (char === ' ') {
-                    output.textContent += ' ';
-                }
-                index++;
-                setTimeout(typeCharacter, 300);
-            }
+// Function to play a random keypress sound
+function playRandomSound() {
+    const randomIndex = Math.floor(Math.random() * keySounds.length);
+    const audio = new Audio(keySounds[randomIndex]);
+    audio.play();
+}
+
+// Simulate typing "Hello, world" on page load
+const text = "Hello, world";
+let index = 0;
+
+function typeCharacter() {
+    if (index < text.length) {
+        const char = text[index].toUpperCase();
+        const key = Array.from(keys).find(k => k.dataset.char === char);
+        if (key) {
+            key.classList.add('pressed');
+            output.textContent += key.textContent;
+            playRandomSound(); // Play sound for simulated keypress
+            setTimeout(() => key.classList.remove('pressed'), 200);
+        } else if (char === ' ') {
+            output.textContent += ' ';
         }
+        index++;
+        setTimeout(typeCharacter, 300);
+    }
+}
 
-        window.onload = typeCharacter;
+window.onload = typeCharacter;
 
-        keys.forEach(key => {
-            key.addEventListener('click', () => {
-                output.textContent += key.textContent;
-            });
-        });
+keys.forEach(key => {
+    key.addEventListener('click', () => {
+        output.textContent += key.textContent;
+        playRandomSound(); // Play sound for manual keypress
+    });
+});
+
     </script>
 </body>
 </html>

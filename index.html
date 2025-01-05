@@ -28,9 +28,9 @@
             align-self: center;
         }
         .keyboard {
-            flex: 2;
+            flex: 3;
             padding: 20px;
-            background-color: #D65A51ff;;
+            background-color: #D65A51ff;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
@@ -56,13 +56,10 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
             user-select: none;
             margin: 3px;
+            transition: transform 0.1s;
         }
-        .key.active {
-            background-color: #ff6347;
-        }
-        .key:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        .key.pressed {
+            transform: scale(0.85);
         }
     </style>
 </head>
@@ -138,9 +135,9 @@
                 const char = text[index].toUpperCase();
                 const key = Array.from(keys).find(k => k.dataset.char === char);
                 if (key) {
-                    key.classList.add('active');
+                    key.classList.add('pressed');
                     output.textContent += key.textContent;
-                    setTimeout(() => key.classList.remove('active'), 200);
+                    setTimeout(() => key.classList.remove('pressed'), 200);
                 } else if (char === ' ') {
                     output.textContent += ' ';
                 }
@@ -159,4 +156,3 @@
     </script>
 </body>
 </html>
-   

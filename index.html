@@ -1,7 +1,137 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Countdown Widget</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f3f4f6;
+    }
+    .container {
+      text-align: center;
+      background: #ffffff;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 300px;
+    }
+    .container input, .container button {
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 16px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    button {
+      cursor: pointer;
+    }
+    #editButton, #completeButton {
+      display: inline-block;
+      width: 45%;
+      margin: 5px 2.5%;
+    }
+    #completeButton:disabled {
+      background-color: #6c757d;
+      cursor: not-allowed;
+    }
+    h1 {
+      font-size: 48px;
+      margin: 10px 0;
+    }
+  </style>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+  <div class="container">
+    <!-- Input Form -->
+    <div id="inputForm">
+      <h2>Set Your Countdown</h2>
+      <input type="text" id="eventName" placeholder="Event Name" required>
+      <input type="date" id="dueDate" required>
+      <button onclick="startCountdown()">Start Countdown</button>
+    </div>
+
+    <!-- Countdown Display -->
+    <div id="countdown" style="display: none;">
+      <h2 id="eventDisplay"></h2>
+      <h1 id="days">0</h1>
+      <p>Days Left</p>
+      <button id="editButton" onclick="editCountdown()">Edit</button>
+      <button id="completeButton" onclick="completeCountdown()">Mark as Completed</button>
+    </div>
+  </div>
+
+  <script>
+    let countdownInterval;
+
+    function startCountdown() {
+      const eventName = document.getElementById("eventName").value.trim();
+      const dueDateInput = document.getElementById("dueDate").value;
+
+      if (!eventName || !dueDateInput) {
+        alert("Please provide both an event name and a due date.");
+        return;
+      }
+
+      const dueDate = new Date(dueDateInput).getTime();
+      if (dueDate < new Date().getTime()) {
+        alert("The due date must be in the future.");
+        return;
+      }
+
+      // Switch to countdown view
+      document.getElementById("inputForm").style.display = "none";
+      document.getElementById("countdown").style.display = "block";
+
+      document.getElementById("eventDisplay").textContent = eventName;
+
+      // Update countdown
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = dueDate - now;
+        const daysLeft = Math.ceil(distance / (1000 * 60 * 60 * 24));
+        document.getElementById("days").textContent = distance < 0 ? "0" : daysLeft;
+      }
+
+      updateCountdown();
+      countdownInterval = setInterval(updateCountdown, 1000 * 60 * 60 * 24); // Update every day
+    }
+
+    function editCountdown() {
+      clearInterval(countdownInterval);
+
+      // Switch back to input form
+      document.getElementById("inputForm").style.display = "block";
+      document.getElementById("countdown").style.display = "none";
+
+      // Pre-fill form with current values
+      const currentEventName = document.getElementById("eventDisplay").textContent;
+      const currentDueDate = new Date(Date.now() + 86400000).toISOString().split("T")[0];
+
+      document.getElementById("eventName").value = currentEventName;
+      document.getElementById("dueDate").value = currentDueDate;
+    }
+
+    function completeCountdown() {
+      clearInterval(countdownInterval);
+
+      // Mark as completed
+      document.getElementById("eventDisplay").textContent += " (Completed)";
+      document.getElementById("days").textContent = "0";
+
+      // Disable buttons
+      document.getElementById("editButton").disabled = true;
+      const completeButton = document.getElementById("completeButton");
+      completeButton.disabled = true;
+      completeButton.style.backgroundColor = "#6c757d";
+    }
+  </script>
 </body>
 </html>

@@ -7,26 +7,35 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: #f8f8f8;
             margin: 0;
             height: 100vh;
-            justify-content: center;
+            display: flex;
+            flex-direction: column;
+            background-color: #f8f8f8;
+        }
+        .output {
+            flex: 1;
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border: 2px solid #000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            font-size: 18px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            width: calc(100% - 40px);
         }
         .keyboard {
             display: grid;
-            grid-template-columns: repeat(10, 50px);
-            gap: 10px;
-            background-color: #e5e5e5;
+            grid-template-columns: repeat(14, 1fr);
+            gap: 5px;
             padding: 20px;
-            border-radius: 10px;
+            background-color: #e5e5e5;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         .key {
-            width: 50px;
-            height: 50px;
+            aspect-ratio: 1 / 1;
             background-color: #000;
             color: #fff;
             border-radius: 50%;
@@ -42,47 +51,76 @@
             transform: translateY(2px);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
-        .output {
-            margin-top: 20px;
-            width: 80%;
-            max-width: 600px;
-            height: 150px;
-            border: 2px solid #000;
-            border-radius: 10px;
-            padding: 10px;
-            background-color: #fff;
-            font-size: 18px;
-            overflow-y: auto;
-            white-space: pre-wrap;
+        .row {
+            display: contents;
         }
     </style>
 </head>
 <body>
-    <h1>Olivetti Lettera 22 Simulator</h1>
-    <div class="keyboard" id="keyboard">
-        <!-- Keys will be dynamically added here -->
-    </div>
     <div class="output" id="output" contenteditable="true"></div>
+    <div class="keyboard">
+        <div class="row">
+            <div class="key">`</div>
+            <div class="key">1</div>
+            <div class="key">2</div>
+            <div class="key">3</div>
+            <div class="key">4</div>
+            <div class="key">5</div>
+            <div class="key">6</div>
+            <div class="key">7</div>
+            <div class="key">8</div>
+            <div class="key">9</div>
+            <div class="key">0</div>
+            <div class="key">-</div>
+            <div class="key">=</div>
+        </div>
+        <div class="row">
+            <div class="key">Q</div>
+            <div class="key">W</div>
+            <div class="key">E</div>
+            <div class="key">R</div>
+            <div class="key">T</div>
+            <div class="key">Y</div>
+            <div class="key">U</div>
+            <div class="key">I</div>
+            <div class="key">O</div>
+            <div class="key">P</div>
+            <div class="key">[</div>
+            <div class="key">]</div>
+        </div>
+        <div class="row">
+            <div class="key">A</div>
+            <div class="key">S</div>
+            <div class="key">D</div>
+            <div class="key">F</div>
+            <div class="key">G</div>
+            <div class="key">H</div>
+            <div class="key">J</div>
+            <div class="key">K</div>
+            <div class="key">L</div>
+            <div class="key">;</div>
+            <div class="key">'</div>
+        </div>
+        <div class="row">
+            <div class="key">Z</div>
+            <div class="key">X</div>
+            <div class="key">C</div>
+            <div class="key">V</div>
+            <div class="key">B</div>
+            <div class="key">N</div>
+            <div class="key">M</div>
+            <div class="key">,</div>
+            <div class="key">.</div>
+            <div class="key">/</div>
+        </div>
+    </div>
 
     <script>
-        const keys = [
-            '`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=',
-            'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[', ']', 
-            'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', '\'', '\\',
-            'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/'
-        ];
-
-        const keyboard = document.getElementById('keyboard');
         const output = document.getElementById('output');
-
-        keys.forEach(key => {
-            const keyElement = document.createElement('div');
-            keyElement.textContent = key;
-            keyElement.classList.add('key');
-            keyElement.addEventListener('click', () => {
-                output.textContent += key;
+        document.querySelectorAll('.key').forEach(key => {
+            key.addEventListener('click', () => {
+                output.textContent += key.textContent;
             });
-            keyboard.appendChild(keyElement);
         });
     </script>
 </body>

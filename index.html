@@ -136,10 +136,22 @@ let lastSoundIndex = 0; // Keep track of the last sound played
 
 // Function to alternate between the two sounds
 function playAlternatingSound() {
-    // Toggle between 0 and 1
-    lastSoundIndex = 1 - lastSoundIndex;
+    lastSoundIndex = 1 - lastSoundIndex; // Toggle between 0 and 1
     const audio = new Audio(keySounds[lastSoundIndex]);
     audio.play();
+}
+
+// Function to simulate keypress for a given character
+function pressKey(char) {
+    const key = Array.from(keys).find(k => k.dataset.char === char);
+    if (key) {
+        key.classList.add('pressed');
+        output.textContent += key.textContent;
+        playAlternatingSound(); // Play sound
+        setTimeout(() => key.classList.remove('pressed'), 200);
+    } else if (char === ' ') {
+        output.textContent += ' ';
+    }
 }
 
 // Simulate typing "Hello, world" on page load
@@ -148,16 +160,7 @@ let index = 0;
 
 function typeCharacter() {
     if (index < text.length) {
-        const char = text[index].toUpperCase();
-        const key = Array.from(keys).find(k => k.dataset.char === char);
-        if (key) {
-            key.classList.add('pressed');
-            output.textContent += key.textContent;
-            playAlternatingSound(); // Play sound for simulated keypress
-            setTimeout(() => key.classList.remove('pressed'), 200);
-        } else if (char === ' ') {
-            output.textContent += ' ';
-        }
+        pressKey(text[index].toUpperCase()); // Simulate keypress for the character
         index++;
         setTimeout(typeCharacter, 300);
     }
@@ -167,8 +170,7 @@ window.onload = typeCharacter;
 
 keys.forEach(key => {
     key.addEventListener('click', () => {
-        output.textContent += key.textContent;
-        playAlternatingSound(); // Play sound for manual keypress
+        pressKey(key.dataset.char); // Play sound and simulate keypress
     });
 });
 

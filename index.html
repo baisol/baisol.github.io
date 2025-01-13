@@ -130,16 +130,15 @@
 const output = document.getElementById('output');
 const keys = document.querySelectorAll('.key');
 
-// Load keypress sounds
-const keySounds = [
-    'sounds/key1.mp3',
-    'sounds/key2.mp3',
-];
+// Load two keypress sounds
+const keySounds = ['sounds/key1.mp3', 'sounds/key2.mp3'];
+let lastSoundIndex = 0; // Keep track of the last sound played
 
-// Function to play a random keypress sound
-function playRandomSound() {
-    const randomIndex = Math.floor(Math.random() * keySounds.length);
-    const audio = new Audio(keySounds[randomIndex]);
+// Function to alternate between the two sounds
+function playAlternatingSound() {
+    // Toggle between 0 and 1
+    lastSoundIndex = 1 - lastSoundIndex;
+    const audio = new Audio(keySounds[lastSoundIndex]);
     audio.play();
 }
 
@@ -154,7 +153,7 @@ function typeCharacter() {
         if (key) {
             key.classList.add('pressed');
             output.textContent += key.textContent;
-            playRandomSound(); // Play sound for simulated keypress
+            playAlternatingSound(); // Play sound for simulated keypress
             setTimeout(() => key.classList.remove('pressed'), 200);
         } else if (char === ' ') {
             output.textContent += ' ';
@@ -169,9 +168,10 @@ window.onload = typeCharacter;
 keys.forEach(key => {
     key.addEventListener('click', () => {
         output.textContent += key.textContent;
-        playRandomSound(); // Play sound for manual keypress
+        playAlternatingSound(); // Play sound for manual keypress
     });
 });
+
 
     </script>
 </body>

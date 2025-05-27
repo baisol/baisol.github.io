@@ -1,0 +1,16 @@
+body{
+    min-height: 100dvh; display: flex;
+    align-items: center; justify-content: center;
+    padding: 2%;
+}
+.box{
+    background-color: #0071ff;
+}
+
+•grid-container {
+    /* This is a comment */
+    display: grid;
+    grid-template-columns: repeat(4, 200px);
+    grid-template-rows: repeat(2, 200px);
+    gap: 1em;
+}

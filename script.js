@@ -1,13 +1,15 @@
-window.addEventListener("load", () => {
-    const gallery = document.querySelector(".gallery");
-    const rowHeight = parseInt(window.getComputedStyle(gallery).getPropertyValue('grid-auto-rows'));
-    const gap = parseInt(window.getComputedStyle(gallery).getPropertyValue('gap'));
-    const items = document.querySelectorAll(".gallery-item");
+// script.js
 
-    items.forEach(item => {
-      const img = item.querySelector("img");
-      const itemHeight = img.getBoundingClientRect().height;
-      const rowSpan = Math.ceil((itemHeight + gap) / (rowHeight + gap));
-      item.style.gridRowEnd = `span ${rowSpan}`;
+document.addEventListener('DOMContentLoaded', function () {
+    var grid = document.querySelector('.gallery');
+  
+    imagesLoaded(grid, function () {
+      new Masonry(grid, {
+        itemSelector: '.gallery-item',
+        columnWidth: '.gallery-sizer',
+        percentPosition: true,
+        gutter: 10
+      });
     });
   });
+  

@@ -4,11 +4,10 @@ body{
     padding: 2%;
 }
 .box{
-    background-color: #0071ff;
+    background-color:#0071ff;
 }
 
-•grid-container {
-    /* This is a comment */
+•grid-container{
     display: grid;
     grid-template-columns: repeat(4, 200px);
     grid-template-rows: repeat(2, 200px);
